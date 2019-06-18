@@ -9,400 +9,199 @@
 nvinfer1::IPlugin* PluginFactory::createPlugin(const char* layerName, const nvinfer1::Weights* weights, int nbWeights)
 {
     assert(isPlugin(layerName));
-    if (!strcmp(layerName, "conv11_mbox_loc_perm"))
+    if (!strcmp(layerName, "Permute_1"))
     {
-        assert(mConv11_mbox_loc_perm_layer.get() == nullptr);
-        mConv11_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_1_layer.get() == nullptr);
+        Permute_1_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv11_mbox_loc_perm_layer.get();
+        return Permute_1_layer.get();
     }
-    else if (!strcmp(layerName, "conv11_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_2"))
     {
-        assert(mConv11_mbox_conf_perm_layer.get() == nullptr);
-        mConv11_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_2_layer.get() == nullptr);
+        Permute_2_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv11_mbox_conf_perm_layer.get();
+        return Permute_2_layer.get();
     }
-    else if (!strcmp(layerName, "conv13_mbox_loc_perm"))
+    else if (!strcmp(layerName, "Permute_3"))
     {
-        assert(mConv13_mbox_loc_perm_layer.get() == nullptr);
-        mConv13_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_3_layer.get() == nullptr);
+        Permute_3_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv13_mbox_loc_perm_layer.get();
+        return Permute_3_layer.get();
     }
-    else if (!strcmp(layerName, "conv13_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_4"))
     {
-        assert(mConv13_mbox_conf_perm_layer.get() == nullptr);
-        mConv13_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_4_layer.get() == nullptr);
+        Permute_4_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv13_mbox_conf_perm_layer.get();
+        return Permute_4_layer.get();
     }
-    else if (!strcmp(layerName, "conv14_2_mbox_loc_perm"))
+    else if (!strcmp(layerName, "Permute_5"))
     {
-        assert(mConv14_2_mbox_loc_perm_layer.get() == nullptr);
-        mConv14_2_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_5_layer.get() == nullptr);
+        Permute_5_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv14_2_mbox_loc_perm_layer.get();
+        return Permute_5_layer.get();
     }
-    else if (!strcmp(layerName, "conv14_2_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_6"))
     {
-        assert(mConv14_2_mbox_conf_perm_layer.get() == nullptr);
-        mConv14_2_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_6_layer.get() == nullptr);
+        Permute_6_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv14_2_mbox_conf_perm_layer.get();
+        return Permute_6_layer.get();
     }
-    else if (!strcmp(layerName, "conv15_2_mbox_loc_perm"))
+    else if (!strcmp(layerName, "Permute_7"))
     {
-        assert(mConv15_2_mbox_loc_perm_layer.get() == nullptr);
-        mConv15_2_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_7_layer.get() == nullptr);
+        Permute_7_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv15_2_mbox_loc_perm_layer.get();
+        return Permute_7_layer.get();
     }
-    else if (!strcmp(layerName, "conv15_2_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_8"))
     {
-        assert(mConv15_2_mbox_conf_perm_layer.get() == nullptr);
-        mConv15_2_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_8_layer.get() == nullptr);
+        Permute_8_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv15_2_mbox_conf_perm_layer.get();
+        return Permute_8_layer.get();
     }
-    else if (!strcmp(layerName, "conv16_2_mbox_loc_perm"))
+    else if (!strcmp(layerName, "Permute_9"))
     {
-        assert(mConv16_2_mbox_loc_perm_layer.get() == nullptr);
-        mConv16_2_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_9_layer.get() == nullptr);
+        Permute_9_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv16_2_mbox_loc_perm_layer.get();
+        return Permute_9_layer.get();
     }
-    else if (!strcmp(layerName, "conv16_2_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_10"))
     {
-        assert(mConv16_2_mbox_conf_perm_layer.get() == nullptr);
-        mConv16_2_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_10_layer.get() == nullptr);
+        Permute_10_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv16_2_mbox_conf_perm_layer.get();
+        return Permute_10_layer.get();
     }
-    else if (!strcmp(layerName, "conv17_2_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_11"))
     {
-        assert(mConv17_2_mbox_conf_perm_layer.get() == nullptr);
-        mConv17_2_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_11_layer.get() == nullptr);
+        Permute_11_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv17_2_mbox_conf_perm_layer.get();
+        return Permute_11_layer.get();
     }
-    else if (!strcmp(layerName, "conv17_2_mbox_loc_perm"))
+    else if (!strcmp(layerName, "Permute_12"))
     {
-        assert(mConv17_2_mbox_loc_perm_layer.get() == nullptr);
-        mConv17_2_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_12_layer.get() == nullptr);
+        Permute_12_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin({{0, 2, 3, 1}}), nvPluginDeleter);
-        return mConv17_2_mbox_loc_perm_layer.get();
+        return Permute_12_layer.get();
     }
 
-    else if (!strcmp(layerName, "conv11_mbox_priorbox"))
+//flatten
+    else if (!strcmp(layerName, "View_1"))
     {
-        assert(mConv11_mbox_priorbox_layer.get() == nullptr);
-        //参数按照原来的prototxt中的prior_box_param设置
-        PriorBoxParameters params;
-        float minsize[1] = {60},aspect_ratio[2] = {1.0,2.0};
-        params.minSize = minsize;
-        params.aspectRatios = aspect_ratio;
-        params.numMinSize = 1;
-        params.numAspectRatios = 2;
-        params.maxSize = nullptr;
-        params.numMaxSize = 0;
-        params.flip = true;
-        params.clip = false;
-        params.variance[0] = 0.1;
-        params.variance[1] = 0.1;
-        params.variance[2] = 0.2;
-        params.variance[3] = 0.2;
-        params.imgH = 0;
-        params.imgW = 0;
-        params.stepH = 0;
-        params.stepW = 0;
-        params.offset = 0.5;
-        mConv11_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(params), nvPluginDeleter);
-        return mConv11_mbox_priorbox_layer.get();
+        assert(View_1_layer.get() == nullptr);
+        View_1_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_1_layer.get();
     }
-    else if (!strcmp(layerName, "conv13_mbox_priorbox"))
+    else if (!strcmp(layerName, "View_2"))
     {
-        assert(mConv13_mbox_priorbox_layer.get() == nullptr);
-        PriorBoxParameters params;
-        float minsize[1] = {105}, maxsize[1] = {150}, aspect_ratio[3] = {1.0,2.0,3.0};
-        params.minSize = minsize;
-        params.numMinSize = 1;
-        params.maxSize = maxsize;
-        params.numMaxSize = 1;
-        params.aspectRatios = aspect_ratio;
-        params.numAspectRatios = 3;
-
-        params.flip = true;
-        params.clip = false;
-        params.variance[0] = 0.1;
-        params.variance[1] = 0.1;
-        params.variance[2] = 0.2;
-        params.variance[3] = 0.2;
-        params.imgH = 0;
-        params.imgW = 0;
-        params.stepH = 0;
-        params.stepW = 0;
-        params.offset = 0.5;
-        mConv13_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(params), nvPluginDeleter);
-        return mConv13_mbox_priorbox_layer.get();
+        assert(View_2_layer.get() == nullptr);
+        View_2_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_2_layer.get();
     }
-    else if (!strcmp(layerName, "conv14_2_mbox_priorbox"))
+    else if (!strcmp(layerName, "View_3"))
     {
-        assert(mConv14_2_mbox_priorbox_layer.get() == nullptr);
-        PriorBoxParameters params;
-        float minsize[1] = {150}, maxsize[1] = {195}, aspect_ratio[3] = {1.0,2.0, 3.0};
-        params.minSize = minsize;
-        params.numMinSize = 1;
-        params.maxSize = maxsize;
-        params.numMaxSize = 1;
-        params.aspectRatios = aspect_ratio;
-        params.numAspectRatios = 3;
-
-        params.flip = true;
-        params.clip = false;
-        params.variance[0] = 0.1;
-        params.variance[1] = 0.1;
-        params.variance[2] = 0.2;
-        params.variance[3] = 0.2;
-        params.imgH = 0;
-        params.imgW = 0;
-        params.stepH = 0;
-        params.stepW = 0;
-        params.offset = 0.5;
-        mConv14_2_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(params), nvPluginDeleter);
-        return mConv14_2_mbox_priorbox_layer.get();
+        assert(View_3_layer.get() == nullptr);
+        View_3_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_3_layer.get();
     }
-    else if (!strcmp(layerName, "conv15_2_mbox_priorbox"))
+    else if (!strcmp(layerName, "View_4"))
     {
-        assert(mConv15_2_mbox_priorbox_layer.get() == nullptr);
-        PriorBoxParameters params;
-        float minsize[1] = {195}, maxsize[3] = {240}, aspect_ratio[3] = {1.0,2.0, 3.0};
-        params.minSize = minsize;
-        params.numMinSize = 1;
-        params.maxSize = maxsize;
-        params.numMaxSize = 1;
-        params.aspectRatios = aspect_ratio;
-        params.numAspectRatios = 3;
-
-        params.flip = true;
-        params.clip = false;
-        params.variance[0] = 0.1;
-        params.variance[1] = 0.1;
-        params.variance[2] = 0.2;
-        params.variance[3] = 0.2;
-        params.imgH = 0;
-        params.imgW = 0;
-        params.stepH = 0;
-        params.stepW = 0;
-        params.offset = 0.5;
-        mConv15_2_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(params), nvPluginDeleter);
-        return mConv15_2_mbox_priorbox_layer.get();
+        assert(View_4_layer.get() == nullptr);
+        View_4_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_4_layer.get();
     }
-    else if (!strcmp(layerName, "conv16_2_mbox_priorbox"))
+    else if (!strcmp(layerName, "View_5"))
     {
-        assert(mConv16_2_mbox_priorbox_layer.get() == nullptr);
-        PriorBoxParameters params;
-        float minsize[1] = {240}, maxsize[1] = {285}, aspect_ratio[3] = {1.0,2.0, 3.0};
-        params.minSize = minsize;
-        params.numMinSize = 1;
-        params.maxSize = maxsize;
-        params.numMaxSize = 1;
-        params.aspectRatios = aspect_ratio;
-        params.numAspectRatios = 3;
-
-        params.flip = true;
-        params.clip = false;
-        params.variance[0] = 0.1;
-        params.variance[1] = 0.1;
-        params.variance[2] = 0.2;
-        params.variance[3] = 0.2;
-        params.imgH = 0;
-        params.imgW = 0;
-        params.stepH = 0;
-        params.stepW = 0;
-        params.offset = 0.5;
-        mConv16_2_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(params), nvPluginDeleter);
-        return mConv16_2_mbox_priorbox_layer.get();
+        assert(View_5_layer.get() == nullptr);
+        View_5_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_5_layer.get();
     }
-    else if (!strcmp(layerName, "conv17_2_mbox_priorbox"))
+    else if (!strcmp(layerName, "View_6"))
     {
-        assert(mConv17_2_mbox_priorbox_layer.get() == nullptr);
-        PriorBoxParameters params;
-        float minsize[1] = {285}, maxsize[1] = {300}, aspect_ratio[3] = {1.0,2.0, 3.0};
-        params.minSize = minsize;
-        params.numMinSize = 1;
-        params.maxSize = maxsize;
-        params.numMaxSize = 1;
-        params.aspectRatios = aspect_ratio;
-        params.numAspectRatios = 3;
-
-        params.flip = true;
-        params.clip = false;
-        params.variance[0] = 0.1;
-        params.variance[1] = 0.1;
-        params.variance[2] = 0.2;
-        params.variance[3] = 0.2;
-        params.imgH = 0;
-        params.imgW = 0;
-        params.stepH = 0;
-        params.stepW = 0;
-        params.offset = 0.5;
-        mConv17_2_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(params), nvPluginDeleter);
-        return mConv17_2_mbox_priorbox_layer.get();
+        assert(View_6_layer.get() == nullptr);
+        View_6_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_6_layer.get();
     }
-
-    else if (!strcmp(layerName, "mbox_loc"))
+    else if (!strcmp(layerName, "View_7"))
     {
-        assert(mBox_loc_layer.get() == nullptr);
-        mBox_loc_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createConcatPlugin(1, true), nvPluginDeleter);
-        //mBox_loc_layer = std::unique_ptr<ConcatPlugin>(new ConcatPlugin(1));
-        return mBox_loc_layer.get();
+        assert(View_7_layer.get() == nullptr);
+        View_7_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_7_layer.get();
     }
-    else if (!strcmp(layerName, "mbox_conf"))
+    else if (!strcmp(layerName, "View_8"))
     {
-        assert(mBox_conf_layer.get() == nullptr);
-        mBox_conf_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createConcatPlugin(1, true), nvPluginDeleter);
-        //mBox_conf_layer = std::unique_ptr<ConcatPlugin>(new ConcatPlugin(1));
-        return mBox_conf_layer.get();
+        assert(View_8_layer.get() == nullptr);
+        View_8_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_8_layer.get();
     }
-    else if (!strcmp(layerName, "mbox_priorbox"))
+    else if (!strcmp(layerName, "View_9"))
     {
-        assert(mBox_priorbox_layer.get() == nullptr);
-        mBox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createConcatPlugin(2, true), nvPluginDeleter);
-        //mBox_priorbox_layer = std::unique_ptr<ConcatPlugin>(new ConcatPlugin(2));
-        return mBox_priorbox_layer.get();
+        assert(View_9_layer.get() == nullptr);
+        View_9_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_9_layer.get();
     }
-    //flatten
-    else if (!strcmp(layerName, "conv11_mbox_conf_flat"))
+    else if (!strcmp(layerName, "View_10"))
     {
-        assert(mConv11_mbox_conf_flat_layer.get() == nullptr);
-        mConv11_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv11_mbox_conf_flat_layer.get();
+        assert(View_10_layer.get() == nullptr);
+        View_10_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_10_layer.get();
     }
-    else if (!strcmp(layerName, "conv13_mbox_conf_flat"))
+    else if (!strcmp(layerName, "View_11"))
     {
-        assert(mConv13_mbox_conf_flat_layer.get() == nullptr);
-        mConv13_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv13_mbox_conf_flat_layer.get();
+        assert(View_11_layer.get() == nullptr);
+        View_11_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_11_layer.get();
     }
-    else if (!strcmp(layerName, "conv14_2_mbox_conf_flat"))
+    else if (!strcmp(layerName, "View_12"))
     {
-        assert(mConv14_2_mbox_conf_flat_layer.get() == nullptr);
-        mConv14_2_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv14_2_mbox_conf_flat_layer.get();
+        assert(View_12_layer.get() == nullptr);
+        View_12_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_12_layer.get();
     }
-    else if (!strcmp(layerName, "conv15_2_mbox_conf_flat"))
+    else if (!strcmp(layerName, "View_13"))
     {
-        assert(mConv15_2_mbox_conf_flat_layer.get() == nullptr);
-        mConv15_2_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv15_2_mbox_conf_flat_layer.get();
+        assert(View_13_layer.get() == nullptr);
+        View_13_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_13_layer.get();
     }
-    else if (!strcmp(layerName, "conv16_2_mbox_conf_flat"))
+    else if (!strcmp(layerName, "View_14"))
     {
-        assert(mConv16_2_mbox_conf_flat_layer.get() == nullptr);
-        mConv16_2_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv16_2_mbox_conf_flat_layer.get();
+        assert(View_14_layer.get() == nullptr);
+        View_14_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
+        return View_14_layer.get();
     }
-    else if (!strcmp(layerName, "conv17_2_mbox_conf_flat"))
+    else if (!strcmp(layerName, "reshape_cls"))
     {
-        assert(mConv17_2_mbox_conf_flat_layer.get() == nullptr);
-        mConv17_2_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv17_2_mbox_conf_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv11_mbox_loc_flat"))
-    {
-        assert(mConv11_mbox_loc_flat_layer.get() == nullptr);
-        mConv11_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv11_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv13_mbox_loc_flat"))
-    {
-        assert(mConv13_mbox_loc_flat_layer.get() == nullptr);
-        mConv13_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv13_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv14_2_mbox_loc_flat"))
-    {
-        assert(mConv14_2_mbox_loc_flat_layer.get() == nullptr);
-        mConv14_2_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv14_2_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv15_2_mbox_loc_flat"))
-    {
-        assert(mConv15_2_mbox_loc_flat_layer.get() == nullptr);
-        mConv15_2_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv15_2_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv16_2_mbox_loc_flat"))
-    {
-        assert(mConv16_2_mbox_loc_flat_layer.get() == nullptr);
-        mConv16_2_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv16_2_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv17_2_mbox_loc_flat"))
-    {
-        assert(mConv17_2_mbox_loc_flat_layer.get() == nullptr);
-        mConv17_2_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mConv17_2_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "mbox_conf_flatten"))
-    {
-        assert(mMbox_conf_flat_layer.get() == nullptr);
-        mMbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer());
-        return mMbox_conf_flat_layer.get();
-    }
-
-    //reshape
-    else if (!strcmp(layerName, "mbox_conf_reshape"))
-    {
-        assert(mMbox_conf_reshape.get() == nullptr);
+        assert(reshape_cls.get() == nullptr);
         assert(nbWeights == 0 && weights == nullptr);
-        mMbox_conf_reshape = std::unique_ptr<Reshape<5>>(new Reshape<5>());
-        return mMbox_conf_reshape.get();
+        reshape_cls = std::unique_ptr<Reshape<5>>(new Reshape<5>());
+        return reshape_cls.get();
     }
-    //softmax layer
-    else if (!strcmp(layerName, "mbox_conf_softmax"))
+    else if (!strcmp(layerName, "reshape_pre"))
+    {
+        assert(reshape_pre.get() == nullptr);
+        assert(nbWeights == 0 && weights == nullptr);
+        reshape_pre = std::unique_ptr<Reshape<4>>(new Reshape<4>());
+        return reshape_pre.get();
+    }
+//softmax
+
+    else if (!strcmp(layerName, "out"))
     {
         assert(mPluginSoftmax == nullptr);
         assert(nbWeights == 0 && weights == nullptr);
         mPluginSoftmax = std::unique_ptr<SoftmaxPlugin>(new SoftmaxPlugin());
         return mPluginSoftmax.get();
     }
-    else if (!strcmp(layerName, "detection_out"))
-    {
-        assert(mDetection_out.get() == nullptr);
-        DetectionOutputParameters params;
-
-        params.backgroundLabelId = 0;
-        params.codeType = CodeTypeSSD::CENTER_SIZE;
-        params.keepTopK = 100;
-        params.shareLocation = true;
-        params.varianceEncodedInTarget = false;
-        params.topK = 100;
-        params.nmsThreshold = 0.45;
-        params.numClasses = 5;
-        params.inputOrder[0] = 0;
-        params.inputOrder[1] = 1;
-        params.inputOrder[2] = 2;
-        params.confidenceThreshold = 0.4;
-        params.confSigmoid = false;
-        params.isNormalized = true;
-
-        mDetection_out = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDDetectionOutputPlugin(params), nvPluginDeleter);
-
-        return mDetection_out.get();
-    }
-
     else
     {
         std::cout << "not found  " << layerName << std::endl;
@@ -414,259 +213,198 @@ nvinfer1::IPlugin* PluginFactory::createPlugin(const char* layerName, const nvin
 IPlugin* PluginFactory::createPlugin(const char* layerName, const void* serialData, size_t serialLength)
 {
     assert(isPlugin(layerName));
-    if (!strcmp(layerName, "conv11_mbox_loc_perm"))
+    if (!strcmp(layerName, "Permute_1"))
     {
-        assert(mConv11_mbox_loc_perm_layer.get() == nullptr);
-        mConv11_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_1_layer.get() == nullptr);
+        Permute_1_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv11_mbox_loc_perm_layer.get();
+        return Permute_1_layer.get();
     }
-    else if (!strcmp(layerName, "conv11_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_2"))
     {
-        assert(mConv11_mbox_conf_perm_layer.get() == nullptr);
-        mConv11_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_2_layer.get() == nullptr);
+        Permute_2_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv11_mbox_conf_perm_layer.get();
+        return Permute_2_layer.get();
     }
     //ssd_pruning
-    else if (!strcmp(layerName, "conv13_mbox_loc_perm"))
+    else if (!strcmp(layerName, "Permute_3"))
     {
-        assert(mConv13_mbox_loc_perm_layer.get() == nullptr);
-        mConv13_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_3_layer.get() == nullptr);
+        Permute_3_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv13_mbox_loc_perm_layer.get();
+        return Permute_3_layer.get();
     }
-    else if (!strcmp(layerName, "conv13_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_4"))
     {
-        assert(mConv13_mbox_conf_perm_layer.get() == nullptr);
-        mConv13_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_4_layer.get() == nullptr);
+        Permute_4_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv13_mbox_conf_perm_layer.get();
+        return Permute_4_layer.get();
     }
-    else if (!strcmp(layerName, "conv14_2_mbox_loc_perm"))
+    else if (!strcmp(layerName, "Permute_5"))
     {
-        assert(mConv14_2_mbox_loc_perm_layer.get() == nullptr);
-        mConv14_2_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_5_layer.get() == nullptr);
+        Permute_5_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv14_2_mbox_loc_perm_layer.get();
+        return Permute_5_layer.get();
     }
-    else if (!strcmp(layerName, "conv14_2_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_6"))
     {
-        assert(mConv14_2_mbox_conf_perm_layer.get() == nullptr);
-        mConv14_2_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_6_layer.get() == nullptr);
+        Permute_6_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv14_2_mbox_conf_perm_layer.get();
+        return Permute_6_layer.get();
     }
-    else if (!strcmp(layerName, "conv15_2_mbox_loc_perm"))
+    else if (!strcmp(layerName, "Permute_7"))
     {
-        assert(mConv15_2_mbox_loc_perm_layer.get() == nullptr);
-        mConv15_2_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_7_layer.get() == nullptr);
+        Permute_7_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv15_2_mbox_loc_perm_layer.get();
+        return Permute_7_layer.get();
     }
-    else if (!strcmp(layerName, "conv15_2_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_8"))
     {
-        assert(mConv15_2_mbox_conf_perm_layer.get() == nullptr);
-        mConv15_2_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_8_layer.get() == nullptr);
+        Permute_8_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv15_2_mbox_conf_perm_layer.get();
+        return Permute_8_layer.get();
     }
-    else if (!strcmp(layerName, "conv16_2_mbox_loc_perm"))
+    else if (!strcmp(layerName, "Permute_9"))
     {
-        assert(mConv16_2_mbox_loc_perm_layer.get() == nullptr);
-        mConv16_2_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_9_layer.get() == nullptr);
+        Permute_9_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv16_2_mbox_loc_perm_layer.get();
+        return Permute_9_layer.get();
     }
-    else if (!strcmp(layerName, "conv16_2_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_10"))
     {
-        assert(mConv16_2_mbox_conf_perm_layer.get() == nullptr);
-        mConv16_2_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_10_layer.get() == nullptr);
+        Permute_10_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv16_2_mbox_conf_perm_layer.get();
+        return Permute_10_layer.get();
     }
-    else if (!strcmp(layerName, "conv17_2_mbox_conf_perm"))
+    else if (!strcmp(layerName, "Permute_11"))
     {
-        assert(mConv17_2_mbox_conf_perm_layer.get() == nullptr);
-        mConv17_2_mbox_conf_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_11_layer.get() == nullptr);
+        Permute_11_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv17_2_mbox_conf_perm_layer.get();
+        return Permute_11_layer.get();
     }
-    else if (!strcmp(layerName, "conv17_2_mbox_loc_perm"))
+    else if (!strcmp(layerName, "Permute_12"))
     {
-        assert(mConv17_2_mbox_loc_perm_layer.get() == nullptr);
-        mConv17_2_mbox_loc_perm_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
+        assert(Permute_12_layer.get() == nullptr);
+        Permute_12_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
                 (createSSDPermutePlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv17_2_mbox_loc_perm_layer.get();
+        return Permute_12_layer.get();
     }
-
-    else if (!strcmp(layerName, "conv11_mbox_priorbox"))
+//flatten
+    else if (!strcmp(layerName, "View_1"))
     {
-        assert(mConv11_mbox_priorbox_layer.get() == nullptr);
-
-        mConv11_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv11_mbox_priorbox_layer.get();
+        assert(View_1_layer.get() == nullptr);
+        View_1_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_1_layer.get();
     }
-    else if (!strcmp(layerName, "conv13_mbox_priorbox"))
+    else if (!strcmp(layerName, "View_2"))
     {
-        assert(mConv13_mbox_priorbox_layer.get() == nullptr);
-        mConv13_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv13_mbox_priorbox_layer.get();
+        assert(View_2_layer.get() == nullptr);
+        View_2_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_2_layer.get();
     }
-    else if (!strcmp(layerName, "conv14_2_mbox_priorbox"))
+    else if (!strcmp(layerName, "View_3"))
     {
-        assert(mConv14_2_mbox_priorbox_layer.get() == nullptr);
-        mConv14_2_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv14_2_mbox_priorbox_layer.get();
+        assert(View_3_layer.get() == nullptr);
+        View_3_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_3_layer.get();
     }
-    else if (!strcmp(layerName, "conv15_2_mbox_priorbox"))
+    else if (!strcmp(layerName, "View_4"))
     {
-        assert(mConv15_2_mbox_priorbox_layer.get() == nullptr);
-        mConv15_2_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv15_2_mbox_priorbox_layer.get();
+        assert(View_4_layer.get() == nullptr);
+        View_4_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_4_layer.get();
     }
-    else if (!strcmp(layerName, "conv16_2_mbox_priorbox"))
+    else if (!strcmp(layerName, "View_5"))
     {
-        assert(mConv16_2_mbox_priorbox_layer.get() == nullptr);
-        mConv16_2_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv16_2_mbox_priorbox_layer.get();
+        assert(View_5_layer.get() == nullptr);
+        View_5_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_5_layer.get();
     }
-    else if (!strcmp(layerName, "conv17_2_mbox_priorbox"))
+    else if (!strcmp(layerName, "View_6"))
     {
-        assert(mConv17_2_mbox_priorbox_layer.get() == nullptr);
-        mConv17_2_mbox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createSSDPriorBoxPlugin(serialData,serialLength), nvPluginDeleter);
-        return mConv17_2_mbox_priorbox_layer.get();
+        assert(View_6_layer.get() == nullptr);
+        View_6_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_6_layer.get();
     }
-
-    else if (!strcmp(layerName, "mbox_loc"))
+    else if (!strcmp(layerName, "View_7"))
     {
-        assert(mBox_loc_layer.get() == nullptr);
-        mBox_loc_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createConcatPlugin(serialData,serialLength), nvPluginDeleter);
-        return mBox_loc_layer.get();
+        assert(View_7_layer.get() == nullptr);
+        View_7_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_7_layer.get();
     }
-    else if (!strcmp(layerName, "mbox_conf"))
+    else if (!strcmp(layerName, "View_8"))
     {
-        assert(mBox_conf_layer.get() == nullptr);
-        mBox_conf_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createConcatPlugin(serialData,serialLength), nvPluginDeleter);
-        return mBox_conf_layer.get();
+        assert(View_8_layer.get() == nullptr);
+        View_8_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_8_layer.get();
     }
-    else if (!strcmp(layerName, "mbox_priorbox"))
+    else if (!strcmp(layerName, "View_9"))
     {
-        assert(mBox_priorbox_layer.get() == nullptr);
-        mBox_priorbox_layer = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>
-                (createConcatPlugin(serialData,serialLength), nvPluginDeleter);
-        return mBox_priorbox_layer.get();
+        assert(View_9_layer.get() == nullptr);
+        View_9_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_9_layer.get();
     }
-        //flatten
-    else if (!strcmp(layerName, "conv11_mbox_conf_flat"))
+    else if (!strcmp(layerName, "View_10"))
     {
-        assert(mConv11_mbox_conf_flat_layer.get() == nullptr);
-        mConv11_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv11_mbox_conf_flat_layer.get();
+        assert(View_10_layer.get() == nullptr);
+        View_10_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_10_layer.get();
     }
-    else if (!strcmp(layerName, "conv13_mbox_conf_flat"))
+    else if (!strcmp(layerName, "View_11"))
     {
-        assert(mConv13_mbox_conf_flat_layer.get() == nullptr);
-        mConv13_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv13_mbox_conf_flat_layer.get();
+        assert(View_11_layer.get() == nullptr);
+        View_11_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_11_layer.get();
     }
-    else if (!strcmp(layerName, "conv14_2_mbox_conf_flat"))
+    else if (!strcmp(layerName, "View_12"))
     {
-        assert(mConv14_2_mbox_conf_flat_layer.get() == nullptr);
-        mConv14_2_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv14_2_mbox_conf_flat_layer.get();
+        assert(View_12_layer.get() == nullptr);
+        View_12_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_12_layer.get();
     }
-    else if (!strcmp(layerName, "conv15_2_mbox_conf_flat"))
+    else if (!strcmp(layerName, "View_13"))
     {
-        assert(mConv15_2_mbox_conf_flat_layer.get() == nullptr);
-        mConv15_2_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv15_2_mbox_conf_flat_layer.get();
+        assert(View_13_layer.get() == nullptr);
+       View_13_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_13_layer.get();
     }
-    else if (!strcmp(layerName, "conv16_2_mbox_conf_flat"))
+    else if (!strcmp(layerName, "View_14"))
     {
-        assert(mConv16_2_mbox_conf_flat_layer.get() == nullptr);
-        mConv16_2_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv16_2_mbox_conf_flat_layer.get();
+        assert(View_14_layer.get() == nullptr);
+       View_14_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
+        return View_14_layer.get();
     }
-    else if (!strcmp(layerName, "conv17_2_mbox_conf_flat"))
+//reshape
+    else if (!strcmp(layerName, "reshape_cls"))
     {
-        assert(mConv17_2_mbox_conf_flat_layer.get() == nullptr);
-        mConv17_2_mbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv17_2_mbox_conf_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv11_mbox_loc_flat"))
-    {
-        assert(mConv11_mbox_loc_flat_layer.get() == nullptr);
-        mConv11_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv11_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv13_mbox_loc_flat"))
-    {
-        assert(mConv13_mbox_loc_flat_layer.get() == nullptr);
-        mConv13_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv13_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv14_2_mbox_loc_flat"))
-    {
-        assert(mConv14_2_mbox_loc_flat_layer.get() == nullptr);
-        mConv14_2_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv14_2_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv15_2_mbox_loc_flat"))
-    {
-        assert(mConv15_2_mbox_loc_flat_layer.get() == nullptr);
-        mConv15_2_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv15_2_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv16_2_mbox_loc_flat"))
-    {
-        assert(mConv16_2_mbox_loc_flat_layer.get() == nullptr);
-        mConv16_2_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv16_2_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "conv17_2_mbox_loc_flat"))
-    {
-        assert(mConv17_2_mbox_loc_flat_layer.get() == nullptr);
-        mConv17_2_mbox_loc_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mConv17_2_mbox_loc_flat_layer.get();
-    }
-    else if (!strcmp(layerName, "mbox_conf_flatten"))
-    {
-        assert(mMbox_conf_flat_layer.get() == nullptr);
-        mMbox_conf_flat_layer = std::unique_ptr<FlattenLayer>(new FlattenLayer(serialData,serialLength));
-        return mMbox_conf_flat_layer.get();
-    }
-    //reshape
-    else if (!strcmp(layerName, "mbox_conf_reshape"))
-    {
-        assert(mMbox_conf_reshape == nullptr);
+        assert(reshape_cls == nullptr);
         //num of class,by lcg
-        mMbox_conf_reshape = std::unique_ptr<Reshape<5>>(new Reshape<5>(serialData, serialLength));
-        return mMbox_conf_reshape.get();
+        reshape_cls = std::unique_ptr<Reshape<5>>(new Reshape<5>(serialData, serialLength));
+        return reshape_cls.get();
     }
-    //softmax
-    else if (!strcmp(layerName, "mbox_conf_softmax"))
+    else if (!strcmp(layerName, "reshape_pre"))
     {
-        std::cout << "2_softmax" << std::endl;
+        assert(reshape_pre == nullptr);
+        //num of class,by lcg
+        reshape_pre = std::unique_ptr<Reshape<4>>(new Reshape<4>(serialData, serialLength));
+        return reshape_pre.get();
+    }
+//softmax
+    else if (!strcmp(layerName, "out"))
+    {
+        std::cout << "out" << std::endl;
         assert(mPluginSoftmax == nullptr);
         mPluginSoftmax = std::unique_ptr<SoftmaxPlugin>(new SoftmaxPlugin(serialData, serialLength));
         return mPluginSoftmax.get();
-    }
-
-    else if (!strcmp(layerName, "detection_out"))
-    {
-        std::cout << "2_detection_out" << std::endl;
-        assert(mDetection_out.get() == nullptr);
-        mDetection_out = std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)>(createSSDDetectionOutputPlugin(serialData, serialLength), nvPluginDeleter);
-        return mDetection_out.get();
     }
     else
     {
@@ -676,46 +414,42 @@ IPlugin* PluginFactory::createPlugin(const char* layerName, const void* serialDa
     }
 }
 
+
 bool PluginFactory::isPlugin(const char* name)
 {
-    return (!strcmp(name, "conv11_mbox_loc_perm")
-            || !strcmp(name, "conv11_mbox_loc_flat")
-            || !strcmp(name, "conv11_mbox_conf_perm")
-            || !strcmp(name, "conv11_mbox_conf_flat")
-            || !strcmp(name, "conv11_mbox_priorbox")
-            || !strcmp(name, "conv13_mbox_loc_perm")
-            || !strcmp(name, "conv13_mbox_loc_flat")
-            || !strcmp(name, "conv13_mbox_conf_perm")
-            || !strcmp(name, "conv13_mbox_conf_flat")
-            || !strcmp(name, "conv13_mbox_priorbox")
-            || !strcmp(name, "conv14_2_mbox_loc_perm")
-            || !strcmp(name, "conv14_2_mbox_loc_flat")
-            || !strcmp(name, "conv14_2_mbox_conf_perm")
-            || !strcmp(name, "conv14_2_mbox_conf_flat")
-            || !strcmp(name, "conv14_2_mbox_priorbox")
-            || !strcmp(name, "conv15_2_mbox_loc_perm")
-            || !strcmp(name, "conv15_2_mbox_loc_flat")
-            || !strcmp(name, "conv15_2_mbox_conf_perm")
-            || !strcmp(name, "conv15_2_mbox_conf_flat")
-            || !strcmp(name, "conv15_2_mbox_priorbox")
-            || !strcmp(name, "conv16_2_mbox_loc_perm")
-            || !strcmp(name, "conv16_2_mbox_loc_flat")
-            || !strcmp(name, "conv16_2_mbox_conf_perm")
-            || !strcmp(name, "conv16_2_mbox_conf_flat")
-            || !strcmp(name, "conv16_2_mbox_priorbox")
-            || !strcmp(name, "conv17_2_mbox_loc_perm")
-            || !strcmp(name, "conv17_2_mbox_loc_flat")
-            || !strcmp(name, "conv17_2_mbox_conf_perm")
-            || !strcmp(name, "conv17_2_mbox_conf_flat")
-            || !strcmp(name, "conv17_2_mbox_priorbox")
-            || !strcmp(name, "mbox_conf_reshape")
-            || !strcmp(name, "mbox_conf_flatten")
-            || !strcmp(name, "mbox_loc")
-            || !strcmp(name, "mbox_conf")
-            || !strcmp(name, "mbox_priorbox")
-            || !strcmp(name, "mbox_conf_softmax")
-            || !strcmp(name, "detection_out"));
+    return (!strcmp(name, "Permute_1")
+            || !strcmp(name, "Permute_2")
+            || !strcmp(name, "Permute_3")
+            || !strcmp(name, "Permute_4")
+            || !strcmp(name, "Permute_5")
+            || !strcmp(name, "Permute_6")
+            || !strcmp(name, "Permute_7")
+            || !strcmp(name, "Permute_8")
+            || !strcmp(name, "Permute_9")
+            || !strcmp(name, "Permute_10")
+            || !strcmp(name, "Permute_11")
+            || !strcmp(name, "Permute_12")
+            || !strcmp(name, "View_1")
+            || !strcmp(name, "View_2")
+            || !strcmp(name, "View_3")
+            || !strcmp(name, "View_4")
+            || !strcmp(name, "View_5")
+            || !strcmp(name, "View_6")
+            || !strcmp(name, "View_7")
+            || !strcmp(name, "View_8")
+            || !strcmp(name, "View_9")
+            || !strcmp(name, "View_10")
+            || !strcmp(name, "View_11")
+            || !strcmp(name, "View_12")
+            || !strcmp(name, "View_13")
+            || !strcmp(name, "View_14")
+            || !strcmp(name, "reshape_cls")
+            || !strcmp(name, "reshape_pre")
+            || !strcmp(name, "out")
+            );
 }
+
+
 
 void PluginFactory::destroyPlugin()
 {
@@ -723,83 +457,68 @@ void PluginFactory::destroyPlugin()
     //mNormalizeLayer.release();
     //mNormalizeLayer = nullptr;
 
-    mConv11_mbox_conf_perm_layer.release();
-    mConv11_mbox_conf_perm_layer = nullptr;
-    mConv11_mbox_loc_perm_layer.release();
-    mConv11_mbox_loc_perm_layer = nullptr;
-    mConv13_mbox_conf_perm_layer.release();
-    mConv13_mbox_conf_perm_layer = nullptr;
-    mConv13_mbox_loc_perm_layer.release();
-    mConv13_mbox_loc_perm_layer = nullptr;
-    mConv14_2_mbox_conf_perm_layer.release();
-    mConv14_2_mbox_conf_perm_layer = nullptr;
-    mConv14_2_mbox_loc_perm_layer.release();
-    mConv14_2_mbox_loc_perm_layer = nullptr;
-    mConv15_2_mbox_conf_perm_layer.release();
-    mConv15_2_mbox_conf_perm_layer = nullptr;
-    mConv16_2_mbox_conf_perm_layer.release();
-    mConv16_2_mbox_conf_perm_layer = nullptr;
-    mConv16_2_mbox_loc_perm_layer.release();
-    mConv16_2_mbox_loc_perm_layer = nullptr;
-    mConv17_2_mbox_conf_perm_layer.release();
-    mConv17_2_mbox_conf_perm_layer = nullptr;
-    mConv17_2_mbox_loc_perm_layer.release();
-    mConv17_2_mbox_loc_perm_layer = nullptr;
-    mConv15_2_mbox_loc_perm_layer.release();
-    mConv15_2_mbox_loc_perm_layer = nullptr;
+    Permute_1_layer.release();
+    Permute_1_layer = nullptr;
+    Permute_2_layer.release();
+    Permute_2_layer = nullptr;
+    Permute_3_layer.release();
+    Permute_3_layer = nullptr;
+    Permute_4_layer.release();
+    Permute_4_layer = nullptr;
+    Permute_5_layer.release();
+    Permute_5_layer = nullptr;
+    Permute_6_layer.release();
+    Permute_6_layer = nullptr;
+    Permute_7_layer.release();
+    Permute_7_layer = nullptr;
+    Permute_8_layer.release();
+    Permute_8_layer = nullptr;
+    Permute_9_layer.release();
+    Permute_9_layer = nullptr;
+    Permute_10_layer.release();
+    Permute_10_layer = nullptr;
+    Permute_11_layer.release();
+    Permute_11_layer = nullptr;
+    Permute_12_layer.release();
+    Permute_12_layer = nullptr;
 
-    mConv13_mbox_priorbox_layer.release();
-    mConv13_mbox_priorbox_layer = nullptr;
-    mConv14_2_mbox_priorbox_layer.release();
-    mConv14_2_mbox_priorbox_layer = nullptr;
-    mConv15_2_mbox_priorbox_layer.release();
-    mConv15_2_mbox_priorbox_layer = nullptr;
-    mConv16_2_mbox_priorbox_layer.release();
-    mConv16_2_mbox_priorbox_layer = nullptr;
-    mConv11_mbox_priorbox_layer.release();
-    mConv11_mbox_priorbox_layer = nullptr;
-    mConv17_2_mbox_priorbox_layer.release();
-    mConv17_2_mbox_priorbox_layer = nullptr;
 
-    mBox_loc_layer.release();
-    mBox_loc_layer = nullptr;
-    mBox_conf_layer.release();
-    mBox_conf_layer = nullptr;
-    mBox_priorbox_layer.release();
-    mBox_priorbox_layer = nullptr;
+    View_1_layer.release();
+    View_1_layer = nullptr;
+    View_2_layer.release();
+    View_2_layer = nullptr;
+    View_3_layer.release();
+    View_3_layer = nullptr;
+    View_4_layer.release();
+    View_4_layer = nullptr;
+    View_5_layer.release();
+    View_5_layer = nullptr;
+    View_6_layer.release();
+    View_6_layer = nullptr;
+    View_7_layer.release();
+    View_7_layer = nullptr;
+    View_8_layer.release();
+    View_8_layer = nullptr;
+    View_9_layer.release();
+    View_9_layer = nullptr;
+    View_10_layer.release();
+    View_10_layer = nullptr;
+    View_11_layer.release();
+    View_11_layer = nullptr;
+    View_12_layer.release();
+    View_12_layer = nullptr;
+    View_13_layer.release();
+    View_13_layer = nullptr;
+    View_14_layer.release();
+    View_14_layer = nullptr;
 
-    mConv11_mbox_conf_flat_layer.release();
-    mConv11_mbox_conf_flat_layer = nullptr;
-    mConv13_mbox_conf_flat_layer.release();
-    mConv13_mbox_conf_flat_layer = nullptr;
-    mConv14_2_mbox_conf_flat_layer.release();
-    mConv14_2_mbox_conf_flat_layer = nullptr;
-    mConv15_2_mbox_conf_flat_layer.release();
-    mConv15_2_mbox_conf_flat_layer = nullptr;
-    mConv16_2_mbox_conf_flat_layer.release();
-    mConv16_2_mbox_conf_flat_layer = nullptr;
-    mConv17_2_mbox_conf_flat_layer.release();
-    mConv17_2_mbox_conf_flat_layer = nullptr;
-    mConv11_mbox_loc_flat_layer.release();
-    mConv11_mbox_loc_flat_layer = nullptr;
-    mConv13_mbox_loc_flat_layer.release();
-    mConv13_mbox_loc_flat_layer = nullptr;
-    mConv14_2_mbox_loc_flat_layer.release();
-    mConv14_2_mbox_loc_flat_layer = nullptr;
-    mConv15_2_mbox_loc_flat_layer.release();
-    mConv15_2_mbox_loc_flat_layer = nullptr;
-    mConv16_2_mbox_loc_flat_layer.release();
-    mConv16_2_mbox_loc_flat_layer = nullptr;
-    mConv17_2_mbox_loc_flat_layer.release();
-    mConv17_2_mbox_loc_flat_layer = nullptr;
-    mMbox_conf_flat_layer.release();
-    mMbox_conf_flat_layer = nullptr;
+    reshape_cls.release();
+    reshape_cls = nullptr;
 
-    mMbox_conf_reshape.release();
-    mMbox_conf_reshape = nullptr;
+    reshape_pre.release();
+    reshape_pre = nullptr;
+
     mPluginSoftmax.release();
     mPluginSoftmax = nullptr;
-    mDetection_out.release();
-    mDetection_out = nullptr;
 
 }

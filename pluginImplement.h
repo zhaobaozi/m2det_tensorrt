@@ -50,6 +50,72 @@ public:
     int bboxID;
     int label;
 };
+//Softmax layer.TensorRT softmax only support cross channel
+class SoftmaxPlugin : public IPlugin
+{
+    //You need to implement it when softmax parameter axis is 2.
+public:
+    int initialize() override { return 0; }
+    inline void terminate() override {}
+
+    SoftmaxPlugin(){}
+    SoftmaxPlugin( const void* buffer, size_t size)
+    {
+        assert(size == sizeof(mCopySize));
+        mCopySize = *reinterpret_cast<const size_t*>(buffer);
+    }
+    inline int getNbOutputs() const override
+    {
+        //@TODO:  As the number of outputs are only 1, because there is only layer in top.
+        return 1;
+    }
+    Dims getOutputDimensions(int index, const Dims* inputs, int nbInputDims) override
+    {
+        assert(nbInputDims == 1);
+        assert(index == 0);
+        assert(inputs[index].nbDims == 3);
+
+        //确保输入的两个维度的积能被 类别数 整除  assert((inputs[0].d[0])*(inputs[0].d[1]) % OutC == 0);
+        assert((inputs[0].d[0])*(inputs[0].d[1]) % 5 == 0);
+
+        // @TODO: Understood this.
+        return DimsCHW( inputs[0].d[0] , inputs[0].d[1] , inputs[0].d[2] );
+    }
+
+    size_t getWorkspaceSize(int) const override
+    {
+        // @TODO: 1 is the batch size.
+        return mCopySize*1;
+    }
+
+    int enqueue(int batchSize, const void*const *inputs, void** outputs, void* workspace, cudaStream_t stream) override
+    {
+        //std::cout<<"flatten enqueue:"<<batchSize<<";"<< mCopySize<<std::endl;
+//        CHECK(cudaMemcpyAsync(outputs[0],inputs[0],batchSize*mCopySize*sizeof(float),cudaMemcpyDeviceToDevice,stream));
+
+        //cudaSoftmax( 8732*21, 21, (float *) *inputs, static_cast<float *>(*outputs));
+        cudaSoftmax( 32760*5, 5, (float *) *inputs, static_cast<float *>(*outputs));
+
+        return 0;
+    }
+
+    size_t getSerializationSize() override
+    {
+        return sizeof(mCopySize);
+    }
+    void serialize(void* buffer) override
+    {
+        *reinterpret_cast<size_t*>(buffer) = mCopySize;
+    }
+    void configure(const Dims*inputs, int nbInputs, const Dims* outputs, int nbOutputs, int)	override
+    {
+        mCopySize = inputs[0].d[0] * inputs[0].d[1] * inputs[0].d[2] * sizeof(float);
+    }
+
+protected:
+    size_t mCopySize;
+
+};
 
 //SSD Reshape layer : shape{0,-1,21}
 template<int OutC>
@@ -119,76 +185,6 @@ protected:
 };
 
 
-
-
-//Softmax layer.TensorRT softmax only support cross channel
-class SoftmaxPlugin : public IPlugin
-{
-    //You need to implement it when softmax parameter axis is 2.
-public:
-    int initialize() override { return 0; }
-    inline void terminate() override {}
-
-    SoftmaxPlugin(){}
-    SoftmaxPlugin( const void* buffer, size_t size)
-    {
-        assert(size == sizeof(mCopySize));
-        mCopySize = *reinterpret_cast<const size_t*>(buffer);
-    }
-    inline int getNbOutputs() const override
-    {
-        //@TODO:  As the number of outputs are only 1, because there is only layer in top.
-        return 1;
-    }
-    Dims getOutputDimensions(int index, const Dims* inputs, int nbInputDims) override
-    {
-        assert(nbInputDims == 1);
-        assert(index == 0);
-        assert(inputs[index].nbDims == 3);
-
-        //确保输入的两个维度的积能被 类别数 整除  assert((inputs[0].d[0])*(inputs[0].d[1]) % OutC == 0);
-        assert((inputs[0].d[0])*(inputs[0].d[1]) % 5 == 0);
-
-        // @TODO: Understood this.
-        return DimsCHW( inputs[0].d[0] , inputs[0].d[1] , inputs[0].d[2] );
-    }
-
-    size_t getWorkspaceSize(int) const override
-    {
-        // @TODO: 1 is the batch size.
-        return mCopySize*1;
-    }
-
-    int enqueue(int batchSize, const void*const *inputs, void** outputs, void* workspace, cudaStream_t stream) override
-    {
-        //std::cout<<"flatten enqueue:"<<batchSize<<";"<< mCopySize<<std::endl;
-//        CHECK(cudaMemcpyAsync(outputs[0],inputs[0],batchSize*mCopySize*sizeof(float),cudaMemcpyDeviceToDevice,stream));
-
-        //cudaSoftmax( 8732*21, 21, (float *) *inputs, static_cast<float *>(*outputs));
-        cudaSoftmax( 1917*5, 5, (float *) *inputs, static_cast<float *>(*outputs));
-
-        return 0;
-    }
-
-    size_t getSerializationSize() override
-    {
-        return sizeof(mCopySize);
-    }
-    void serialize(void* buffer) override
-    {
-        *reinterpret_cast<size_t*>(buffer) = mCopySize;
-    }
-    void configure(const Dims*inputs, int nbInputs, const Dims* outputs, int nbOutputs, int)	override
-    {
-        mCopySize = inputs[0].d[0] * inputs[0].d[1] * inputs[0].d[2] * sizeof(float);
-    }
-
-protected:
-    size_t mCopySize;
-
-};
-
-
 //SSD Flatten layer
 class FlattenLayer : public IPlugin
 {
@@ -249,35 +245,10 @@ protected:
 };
 
 
-//Concat layer . TensorRT Concat only support cross channel
-class ConcatPlugin : public IPlugin
-{
-public:
-    ConcatPlugin(int axis){ _axis = axis; };
-    ConcatPlugin(int axis, const void* buffer, size_t size);
 
-    inline int getNbOutputs() const override {return 1;};
-    Dims getOutputDimensions(int index, const Dims* inputs, int nbInputDims) override ;
-    int initialize() override;
-    inline void terminate() override;
 
-    inline size_t getWorkspaceSize(int) const override { return 0; };
-    int enqueue(int batchSize, const void*const *inputs, void** outputs, void*, cudaStream_t stream) override;
 
-    size_t getSerializationSize() override;
-    void serialize(void* buffer) override;
 
-    void configure(const Dims*inputs, int nbInputs, const Dims* outputs, int nbOutputs, int) override;
-
-protected:
-    DimsCHW dimsConv4_3, dimsFc7, dimsConv6, dimsConv7, dimsConv8, dimsConv9;
-    int inputs_size;
-    int top_concat_axis;//top 层 concat后的维度
-    int* bottom_concat_axis = new int[9];//记录每个bottom层concat维度的shape
-    int* concat_input_size_ = new int[9];
-    int* num_concats_ = new int[9];
-    int _axis;
-};
 class PluginFactory : public nvinfer1::IPluginFactory, public nvcaffeparser1::IPluginFactory
 {
 public:
@@ -288,54 +259,38 @@ public:
 
     bool isPlugin(const char* name) override;
     void destroyPlugin();
-    //normalize layer
-    //std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mNormalizeLayer{ nullptr, nvPluginDeleter };
-    //permute layers
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv11_mbox_conf_perm_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv11_mbox_loc_perm_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv13_mbox_conf_perm_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv13_mbox_loc_perm_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv14_2_mbox_conf_perm_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv14_2_mbox_loc_perm_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv15_2_mbox_conf_perm_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv15_2_mbox_loc_perm_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv16_2_mbox_conf_perm_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv16_2_mbox_loc_perm_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv17_2_mbox_conf_perm_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv17_2_mbox_loc_perm_layer{ nullptr, nvPluginDeleter };
-    //priorbox layers
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv13_mbox_priorbox_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv14_2_mbox_priorbox_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv15_2_mbox_priorbox_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv16_2_mbox_priorbox_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv11_mbox_priorbox_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mConv17_2_mbox_priorbox_layer{ nullptr, nvPluginDeleter };
-    //detection output layer
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mDetection_out{ nullptr, nvPluginDeleter };
-    //concat layers
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mBox_loc_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mBox_conf_layer{ nullptr, nvPluginDeleter };
-    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> mBox_priorbox_layer{ nullptr, nvPluginDeleter };
-    //reshape layer
-    std::unique_ptr<Reshape<5>> mMbox_conf_reshape{ nullptr };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_1_layer{ nullptr, nvPluginDeleter };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_2_layer{ nullptr, nvPluginDeleter };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_3_layer{ nullptr, nvPluginDeleter };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_4_layer{ nullptr, nvPluginDeleter };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_5_layer{ nullptr, nvPluginDeleter };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_6_layer{ nullptr, nvPluginDeleter };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_7_layer{ nullptr, nvPluginDeleter };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_8_layer{ nullptr, nvPluginDeleter };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_9_layer{ nullptr, nvPluginDeleter };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_10_layer{ nullptr, nvPluginDeleter };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_11_layer{ nullptr, nvPluginDeleter };
+    std::unique_ptr<INvPlugin, decltype(nvPluginDeleter)> Permute_12_layer{ nullptr, nvPluginDeleter };
     //flatten layers
-    std::unique_ptr<FlattenLayer> mConv11_mbox_conf_flat_layer{ nullptr };
-    std::unique_ptr<FlattenLayer> mConv13_mbox_conf_flat_layer{ nullptr };
-    std::unique_ptr<FlattenLayer> mConv14_2_mbox_conf_flat_layer{ nullptr };
-    std::unique_ptr<FlattenLayer> mConv15_2_mbox_conf_flat_layer{ nullptr };
-    std::unique_ptr<FlattenLayer> mConv16_2_mbox_conf_flat_layer{ nullptr };
-    std::unique_ptr<FlattenLayer> mConv17_2_mbox_conf_flat_layer{ nullptr };
-    std::unique_ptr<FlattenLayer> mConv11_mbox_loc_flat_layer{ nullptr };
-    std::unique_ptr<FlattenLayer> mConv13_mbox_loc_flat_layer{ nullptr };
-    std::unique_ptr<FlattenLayer> mConv14_2_mbox_loc_flat_layer{ nullptr };
-    std::unique_ptr<FlattenLayer> mConv15_2_mbox_loc_flat_layer{ nullptr };
-    std::unique_ptr<FlattenLayer> mConv16_2_mbox_loc_flat_layer{ nullptr };
-    std::unique_ptr<FlattenLayer> mConv17_2_mbox_loc_flat_layer{ nullptr };
-    //softmax layer
+    std::unique_ptr<FlattenLayer> View_1_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_2_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_3_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_4_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_5_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_6_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_7_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_8_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_9_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_10_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_11_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_12_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_13_layer{ nullptr };
+    std::unique_ptr<FlattenLayer> View_14_layer{ nullptr };
+//reshape
+    std::unique_ptr<Reshape<5>> reshape_cls{ nullptr };
+    std::unique_ptr<Reshape<4>> reshape_pre{ nullptr };
+//softmax
     std::unique_ptr<SoftmaxPlugin> mPluginSoftmax{ nullptr };
-    std::unique_ptr<FlattenLayer> mMbox_conf_flat_layer{ nullptr };
-
-
 };
 
 #endif

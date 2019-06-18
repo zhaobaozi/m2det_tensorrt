@@ -54,4 +54,4 @@ I retrianed mobileNet-SSD,my number of classfication is 5
 
 **The bug has been fixed**
 
-![image](testPic/test1.png)
+![image](testPic/test1.png)# me2det_tensorrt_new

@@ -1,0 +1,8 @@
+/home/ubuntu/zhq/Mobilenet-tensor/CMakeFiles/install.dir
+/home/ubuntu/zhq/Mobilenet-tensor/CMakeFiles/list_install_components.dir
+/home/ubuntu/zhq/Mobilenet-tensor/CMakeFiles/rebuild_cache.dir
+/home/ubuntu/zhq/Mobilenet-tensor/CMakeFiles/edit_cache.dir
+/home/ubuntu/zhq/Mobilenet-tensor/CMakeFiles/inferLib.dir
+/home/ubuntu/zhq/Mobilenet-tensor/CMakeFiles/mobileNet.dir
+/home/ubuntu/zhq/Mobilenet-tensor/CMakeFiles/install/local.dir
+/home/ubuntu/zhq/Mobilenet-tensor/CMakeFiles/install/strip.dir
